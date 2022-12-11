@@ -1,6 +1,6 @@
 # ibkr_tws_python
 
-This script downloads the VIX futures (/VX) through Interactive Brokers API. 
+This script downloads the VIX index and the VIX futures data through Interactive Brokers API and draws a chart.
 
 Requirements:
 - IBKR account + market data subscription for CFE 
