@@ -1,0 +1,22 @@
+from ib_insync import *
+import pandas as pd
+
+# Connect to IBKR
+ib = IB()
+ib.connect('127.0.0.1', 7497, clientId=1)
+
+#contracts = ib.reqContractDetails(Option(symbol='VIX'))
+#df = util.df(contracts)
+## print(df)
+#df.to_csv(r'vix.csv', header=None, index=None, sep=' ', mode='a')
+
+
+contract = Option('VIX', '20221220', 20, 'C', 'SMART')
+det = ib.qualifyContracts(contract)
+[ticker] = ib.reqTickers(contract)
+print(ticker)
+
+ib.reqMktData(contract, '', False, False)
+# Print the last price for the contract
+ib.sleep(2)
+print('Last price:' , ib.ticker(contract).last)
