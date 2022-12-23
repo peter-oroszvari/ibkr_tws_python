@@ -1,6 +1,7 @@
 from ib_insync import *
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+
 
 
 price_list = [] 
@@ -36,6 +37,8 @@ last_row = data_df.tail(1)
 # Access the close field from the last row to get the last price
 last_price_vix = last_row['close']
 last_price_vix_value = last_price_vix.values
+print('VIX')
+print(type(int(last_price_vix_value)))
 print(last_price_vix_value[0])
 
 # Define a list of expiry dates for the next 12 months
@@ -88,23 +91,44 @@ for list in contract_list:
     print(f'Price: {price_list[i]}')
     i = i + 1 
 
-# Draw a chart, define x,y values
-x = contract_list
-y = price_list
 
-# Create the line chart
-plt.plot(x, y)
-plt.axhline(y = last_price_vix_value, color ="red", linestyle ="--")
-label = "VIX Index: {}".format(last_price_vix_value)
-plt.legend([label])
+# Create the chart using the px.line() function
+fig = px.line(x=contract_list, y=price_list)
+
+# Add a horizontal line at the value of the VIX index
+fig.add_shape(
+    type='line',
+    x0=0,
+    x1=1,
+    y0=int(last_price_vix_value[0]),
+    y1=int(last_price_vix_value[0]),
+    xref='paper',
+    yref='y',
+    line=dict(color='red', dash='dash')
+)
+
+# Add a label to the horizontal line
+fig.add_annotation(
+    x=0.5,
+    y=last_price_vix_value,
+    xref='paper',
+    yref='y',
+    text="VIX Index: {}".format(last_price_vix_value[0]),
+    font=dict(color='red'),
+    showarrow=False
+)
+# Set the y-axis limits to include the value of the VIX index
+fig.update_yaxes(range=[int(last_price_vix_value[0]) - 1, max(price_list)+1])
+
+# Update the layout to add labels and a title
+fig.update_layout(
+    title="VIX Futures Prices",
+    xaxis_title="Symbol",
+    yaxis_title="Volatility"
+)
+
+fig.update_layout(shapes=[fig.layout.shapes[0]])
 
 
-# Add labels and title
-plt.xlabel('Symbol')
-plt.ylabel('Volatility')
-plt.title('VIX Futures curve')
-
-for i in range(len(x)):
-    plt.text(x[i], y[i], y[i])
-
-plt.show()
+# Show the chart
+fig.show()

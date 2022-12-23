@@ -1,0 +1,35 @@
+from ib_insync import *
+import pandas as pd
+
+# Connect to IBKR
+ib = IB()
+ib.connect('127.0.0.1', 7497, clientId=1)
+
+# Request the options data for VIX
+vix = FuturesOption()
+vix.symbol = 'VIX'
+vix.currency = 'USD'
+vix.strike = 28
+vix.right = 'C'
+vix.exchange = 'SMART'
+#vix.tradingClass = 'VX'
+vix.localSymbol = 'VIX 230118C00018000'
+vix.lastTradeDateOrContractMonth = '202301'
+ib.qualifyContracts(vix)
+
+
+[ticker] = ib.reqTickers(vix)
+vixValue = ticker.marketPrice()
+
+options = ib.reqSecDefOptParams(vix.symbol,vix.exchange,vix.secType, vix.conId)
+
+ib.sleep(5)
+print (options)
+# Convert the options data to a Pandas DataFrame
+vix_options_chain = util.df(options)
+
+# Print the options chain data
+print(vix_options_chain)
+
+# Disconnect from IBKR
+ib.disconnect()

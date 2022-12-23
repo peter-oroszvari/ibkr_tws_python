@@ -20,3 +20,7 @@ ib.reqMktData(contract, '', False, False)
 # Print the last price for the contract
 ib.sleep(2)
 print('Last price:' , ib.ticker(contract).last)
+
+#chains = ib.reqSecDefOptParams('VIX', 'SMART', 'FUT', contract.conId)
+
+#util.df(chains)
