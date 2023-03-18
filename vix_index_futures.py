@@ -1,6 +1,14 @@
 from ib_insync import *
 import pandas as pd
 import matplotlib.pyplot as plt
+import datetime
+from dateutil import relativedelta, rrule
+
+def get_vix_expiration(year, month):
+    third_friday = datetime.date(year, month, 15) + relativedelta.relativedelta(weekday=rrule.FR(3))
+    expiration_day = third_friday - relativedelta.relativedelta(days=30, weekday=rrule.WE(-1))
+    return expiration_day
+
 
 
 price_list = [] 
@@ -38,9 +46,24 @@ last_price_vix = last_row['close']
 last_price_vix_value = last_price_vix.values
 print(last_price_vix_value[0])
 
-# Define a list of expiry dates for the next 12 months
-expiry_dates = ['202301', '202302', '202303', '202304', '202305', '202306',
-                '202307', '202308']
+today = datetime.date.today()
+
+# Calculate the current month's VIX futures expiration date
+current_vix_expiration = get_vix_expiration(today.year, today.month)
+
+# If the current month's VIX futures have already expired, use the next month as the starting point
+if today > current_vix_expiration:
+    starting_month = today + relativedelta.relativedelta(months=1)
+else:
+    starting_month = today
+
+# If the starting month's VIX futures haven't expired yet, use the current month as the starting point
+if starting_month.month == today.month:
+    expiry_dates = [(starting_month + relativedelta.relativedelta(months=i)).strftime('%Y%m') for i in range(0, 8)]
+else:
+    expiry_dates = [(starting_month + relativedelta.relativedelta(months=i)).strftime('%Y%m') for i in range(-1, 7)]
+
+print(expiry_dates)
 
 # Loop over the expiry dates and add them to the contract
 for expiry_date in expiry_dates:
