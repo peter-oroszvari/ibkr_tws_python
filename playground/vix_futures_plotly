@@ -2,8 +2,6 @@ from ib_insync import *
 import pandas as pd
 import plotly.express as px
 
-
-
 price_list = [] 
 contract_list = []
 # Create an IB object and connect to TWS or Gateway
@@ -122,13 +120,10 @@ fig.update_yaxes(range=[int(last_price_vix_value[0]) - 1, max(price_list)+1])
 
 # Update the layout to add labels and a title
 fig.update_layout(
-    title="VIX Futures Prices",
+    title="VIX Futures",
     xaxis_title="Symbol",
     yaxis_title="Volatility"
 )
-
-fig.update_layout(shapes=[fig.layout.shapes[0]])
-
 
 # Show the chart
 fig.show()

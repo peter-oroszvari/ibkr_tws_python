@@ -1,0 +1,4 @@
+from vix_index_futures import get_vix_and_vix_futures_prices
+
+vix_data_list = get_vix_and_vix_futures_prices()
+print(vix_data_list)
