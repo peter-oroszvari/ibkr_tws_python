@@ -1,3 +1,4 @@
 
 qualify.py
 *.csv
+__pycache__
