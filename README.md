@@ -13,7 +13,7 @@ To install the required Python packages, run the following command:
 
 ```bash
 pip install ib_insync pandas matplotlib python-dateutil
-
+```
 ## Usage
 
 1. Import the `get_vix_and_vix_futures_prices()` function from the main script:
