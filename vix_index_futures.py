@@ -24,7 +24,7 @@ def get_vix_expiration(year, month):
     expiration_day = third_friday - relativedelta.relativedelta(days=30, weekday=rrule.WE(-1))
     return expiration_day
 
-def get_vix_and_vix_futures_prices():
+async def get_vix_and_vix_futures_prices():
     """
     Fetches the latest VIX index price and VIX futures prices for the next 8 months using Interactive Brokers API.
 
@@ -44,7 +44,7 @@ def get_vix_and_vix_futures_prices():
 
     # Create an IB object and connect to TWS or Gateway
     ib = IB()
-    ib.connect('127.0.0.1', 7497, clientId=1)
+    await ib.connectAsync('127.0.0.1', 7497, clientId=1, timeout=30)
 
     # Define a contract object for the VIX index
     vix_index = Contract()
@@ -152,7 +152,7 @@ def get_vix_and_vix_futures_prices():
     #    i = i + 1 
         
     vix_data_list = [{"symbol": contract_list[i], "price": price_list[i]} for i in range(len(contract_list))]
-
+    ib.disconnect()
     return vix_data_list
     
 ''''
