@@ -22,13 +22,25 @@ pip install ib_insync pandas matplotlib python-dateutil
 from vix_index import get_vix_and_vix_futures_prices
 ```
 
-Call the get_vix_and_vix_futures_prices() function to fetch the latest VIX index price and VIX futures prices:
+2. Call the get_vix_and_vix_futures_prices() function to fetch the latest VIX index price and VIX futures prices:
 ```python
 vix_data_list = get_vix_and_vix_futures_prices()
 print(vix_data_list)
 ```
 
+The function returns a list of dictionaries containing the contract symbols and their latest prices. Example:
 
+```css
+[  {"symbol": "VXH23", "price": 25.5},  {"symbol": "VXJ23", "price": 26.3},  ...]
+```
+
+## Function Descriptions
+
+get_vix_expiration(year, month): Calculates the VIX futures expiration date for the given year and month.
+
+get_vix_and_vix_futures_prices(): Fetches the latest VIX index price and VIX futures prices for the next 8 months using the Interactive Brokers API.
+
+Please refer to the inline documentation in the main script for more details about the function arguments and return values.
 
 # ibkr_tws_python
 
