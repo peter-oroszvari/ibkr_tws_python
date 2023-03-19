@@ -1,6 +1,6 @@
 # VIX Futures Price Fetcher
 
-This project fetches the latest VIX index price and VIX futures prices for the next 8 months using the Interactive Brokers API. It includes functions to calculate VIX futures expiration dates and obtain the latest VIX and VIX futures prices.
+The vix_index_futures.py fetches the latest VIX index price and VIX futures prices for the next 8 months using the Interactive Brokers API. It includes functions to calculate VIX futures expiration dates and obtain the latest VIX and VIX futures prices.
 
 ## Prerequisites
 
